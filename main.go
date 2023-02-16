@@ -12,10 +12,18 @@ import (
 )
 
 var taskfilePath string
+var help bool
 
 func init() {
 	flag.StringVar(&taskfilePath, "tasks", "", "Path to taskfile")
+	flag.BoolVar(&help, "help", false, "Show usage")
 	flag.Parse()
+
+	if help {
+		fmt.Printf("Usage:\n  %s --tasks <path to taskfile>\nFlags:\n", os.Args[0])
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
 
 	if taskfilePath == "" {
 		log.Fatalf("--tasks parameter is required")
